@@ -1,163 +1,161 @@
 <!DOCTYPE html>
 <html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Exercice2: animation d'un vélo hey 2</title>
+    <style>
+      html {
+        background-color: aquamarine;
+      }
 
-<head>
-	<meta charset="UTF-8">
-	<title>Exercice2: animation d'un vélo hey</title>
-	<style>
-		html {
-			background-color: aquamarine;
-		}
+      body {
+        width: 80%;
+        margin: auto;
+        background: white;
+      }
 
-		body {
-			width: 80%;
-			margin: auto;
-			background: white;
-		}
+      input {
+        margin: 20px;
+        padding: 5px;
+      }
 
-		input {
-			margin: 20px;
-			padding: 5px;
-		}
+      #animation {
+        position: relative;
+        height: 200px;
+      }
 
-		#animation {
-			position: relative;
-			height: 200px;
-		}
+      #velo1,
+      #velo2 {
+        position: absolute;
+        width: 342px;
+        height: 200px;
+      }
 
-		#velo1,
-		#velo2 {
-			position: absolute;
-			width: 342px;
-			height: 200px;
-		}
+      img {
+        position: absolute;
+        display: block;
+      }
 
-		img {
-			position: absolute;
-			display: block;
-		}
+      .velo {
+        width: 100%;
+      }
 
-		.velo {
-			width: 100%;
-		}
+      .roue-arriere {
+        bottom: 8px;
+        left: 8px;
+        width: 122px;
+      }
 
-		.roue-arriere {
-			bottom: 8px;
-			left: 8px;
-			width: 122px;
-		}
+      .roue-avant {
+        bottom: 8px;
+        left: 209px;
+        width: 122px;
+      }
 
-		.roue-avant {
-			bottom: 8px;
-			left: 209px;
-			width: 122px;
-		}
+      p {
+        padding: 20px;
+      }
+    </style>
 
-		p {
-			padding: 20px;
-		}
-	</style>
+    <script>
 
-	<script>
+      window.addEventListener("load", function () {
+      	demarrer = document.getElementById('demarrer');
+      	seane = document.getElementById("animation");
+      	velo1 = document.getElementById("velo1");
+      	velo2 = velo1.cloneNode(true);
+      	velo2.setAttribute("id", "velo2");
+      	seane.appendChild(velo2);
+      	velo2 = document.getElementById("velo2");
 
-		window.addEventListener("load", function () {
-			demarrer = document.getElementById('demarrer');
-			seane = document.getElementById("animation");
-			velo1 = document.getElementById("velo1");
-			velo2 = velo1.cloneNode(true);
-			velo2.setAttribute("id", "velo2");
-			seane.appendChild(velo2);
-			velo2 = document.getElementById("velo2");
-	
-			let velo = class {
-		
-				constructor(velo) {
-					this.velo = velo;
-					this.i = 0;
-					this.frequance = 5;
-					this.timerId;
-					this.veloFinDeCourse;
-				}
+      	let velo = class {
 
-
-				VeloCoteDroitToucheSeane = function () {
-					var seane = this.velo.parentElement;
-					var coteDroitVelo = Math.floor(this.velo.getBoundingClientRect().right);
-					var coteDroitSeane = Math.floor(seane.getBoundingClientRect().right);
-					var coteGaucheSeane = Math.floor(seane.getBoundingClientRect().left);
-					return (coteDroitVelo > coteDroitSeane ? true : false);
-
-				 }
-				// VeloQuitteSeane = function () {
-				// 	var seane = this.velo.parentElement;
-				// 	var coteGaucheVelo = Math.floor(this.velo.getBoundingClientRect().left);
-				// 	var coteDroitSeane = Math.floor(seane.getBoundingClientRect().right);
-				// 	return (coteGaucheVelo > coteDroitSeane ? true : false);
-				// }
-				veloDepartPostion = function () {
-					//var seane = this.velo.parentElement;
-					//var coteGaucheSeane = Math.floor(seane.getBoundingClientRect().left);
-					var width = (Math.floor(this.velo.getBoundingClientRect().width));
-					this.velo.style.left = -width + "px";
-					this.i = -width;
-				}
-				//veloFinDeCourse = this.VeloCoteDroitToucheSeane;
-
-				bougerVelo : function () {
-					var i,velo;
-					i = this.i
-					
-					i++;
-					velo.style.left = i + "px";
-					console.log(i)
-
-					//if (signal === 'go') {
-					// this.timerId = Window.requestAnimationFrame(function () {
-					// 		var seane = velo.parentElement;
-					// 		var coteDroitVelo = Math.floor(velo.getBoundingClientRect().right);
-					// 		var coteGaucheVelo = Math.floor(velo.getBoundingClientRect().left);
-					// 		var coteDroitSeane = Math.floor(seane.getBoundingClientRect().right);
-					// 		var coteGaucheSeane = Math.floor(seane.getBoundingClientRect().left);
-					// 		if (coteDroitVelo === coteDroitSeane) {
-					// 			veloFinDeCourse('contact')
-					// 		} else if (coteGaucheVelo === coteDroitSeane) {
-					// 			veloFinDeCourse('out')
-					// 		}
-
-					// 	});
-					//}
-					// if (signal === 'stop') {
-					// 	window.clearInterval(this.timerId);
-					// }
+      		constructor(velo) {
+      			this.velo = velo;
+      			this.i = 0;
+      			this.frequance = 5;
+      			this.timerId;
+      			this.veloFinDeCourse;
+      		}
 
 
-				}
+      		VeloCoteDroitToucheSeane = function () {
+      			var seane = this.velo.parentElement;
+      			var coteDroitVelo = Math.floor(this.velo.getBoundingClientRect().right);
+      			var coteDroitSeane = Math.floor(seane.getBoundingClientRect().right);
+      			var coteGaucheSeane = Math.floor(seane.getBoundingClientRect().left);
+      			return (coteDroitVelo > coteDroitSeane ? true : false);
 
+      		 }
+      		// VeloQuitteSeane = function () {
+      		// 	var seane = this.velo.parentElement;
+      		// 	var coteGaucheVelo = Math.floor(this.velo.getBoundingClientRect().left);
+      		// 	var coteDroitSeane = Math.floor(seane.getBoundingClientRect().right);
+      		// 	return (coteGaucheVelo > coteDroitSeane ? true : false);
+      		// }
+      		veloDepartPostion = function () {
+      			//var seane = this.velo.parentElement;
+      			//var coteGaucheSeane = Math.floor(seane.getBoundingClientRect().left);
+      			var width = (Math.floor(this.velo.getBoundingClientRect().width));
+      			this.velo.style.left = -width + "px";
+      			this.i = -width;
+      		}
+      		//veloFinDeCourse = this.VeloCoteDroitToucheSeane;
+
+      		bougerVelo : function () {
+      			var i,velo;
+      			i = this.i
+
+      			i++;
+      			velo.style.left = i + "px";
+      			console.log(i)
+
+      			//if (signal === 'go') {
+      			// this.timerId = Window.requestAnimationFrame(function () {
+      			// 		var seane = velo.parentElement;
+      			// 		var coteDroitVelo = Math.floor(velo.getBoundingClientRect().right);
+      			// 		var coteGaucheVelo = Math.floor(velo.getBoundingClientRect().left);
+      			// 		var coteDroitSeane = Math.floor(seane.getBoundingClientRect().right);
+      			// 		var coteGaucheSeane = Math.floor(seane.getBoundingClientRect().left);
+      			// 		if (coteDroitVelo === coteDroitSeane) {
+      			// 			veloFinDeCourse('contact')
+      			// 		} else if (coteGaucheVelo === coteDroitSeane) {
+      			// 			veloFinDeCourse('out')
+      			// 		}
+
+      			// 	});
+      			//}
+      			// if (signal === 'stop') {
+      			// 	window.clearInterval(this.timerId);
+      			// }
+
+
+      		}
 
 
 
-			}
 
-			velo12 = new velo(velo1);
-			velo22 = new velo(velo2);
-			velo22.veloDepartPostion();
+      	}
 
-			// velo1.bougerVelo('go', function (x) {
-			// 	console.log(x);
-			//});
-			demarrer.addEventListener('click', function () {
-				hello = setInterval(velo12.bougerVelo,30)
+      	velo12 = new velo(velo1);
+      	velo22 = new velo(velo2);
+      	velo22.veloDepartPostion();
 
-				//velo1.bougerVelo('go', function (x) {
+      	// velo1.bougerVelo('go', function (x) {
+      	// 	console.log(x);
+      	//});
+      	demarrer.addEventListener('click', function () {
+      		hello = setInterval(velo12.bougerVelo,30)
 
-				// if (x === 'contact') {
-				// 	velo2.bougerVelo('go', function (y) {
+      		//velo1.bougerVelo('go', function (x) {
 
-				// 	})
-				// }
-			});
-		})
+      		// if (x === 'contact') {
+      		// 	velo2.bougerVelo('go', function (y) {
 
+      		// 	})
+      		// }
+      	});
+      })
 
 
 
@@ -170,38 +168,29 @@
 
 
 
-			//velo12.bougerVelo('stop')
-			//console.log(velo12.VeloQuitteSeane())
-			//velo12.bougerVelo();
-			// velo12.veloDepartPostion();
-			// console.log(v = Math.floor(velo1.getBoundingClientRect().width));
-			// console.log(s = Math.floor(seane.getBoundingClientRect().left));
-			// v = Math.floor(velo1.getBoundingClientRect().width)
-			// s = Math.floor(seane.getBoundingClientRect().left)
-			// console.log(s - v);
 
+      	//velo12.bougerVelo('stop')
+      	//console.log(velo12.VeloQuitteSeane())
+      	//velo12.bougerVelo();
+      	// velo12.veloDepartPostion();
+      	// console.log(v = Math.floor(velo1.getBoundingClientRect().width));
+      	// console.log(s = Math.floor(seane.getBoundingClientRect().left));
+      	// v = Math.floor(velo1.getBoundingClientRect().width)
+      	// s = Math.floor(seane.getBoundingClientRect().left)
+      	// console.log(s - v);
+    </script>
+  </head>
 
-
-
-
-
-
-
-	</script>
-
-</head>
-
-<body>
-	<input type="button" id="demarrer" value="Démarrer">
-	<input type="hidden" id="arreter" value="Arrêter">
-	<div id="animation">
-		<div id="velo1">
-			<img class="roue-arriere" src="images/roue.png" alt="">
-			<img class="roue-avant" src="images/roue.png" alt="">
-			<img class="velo" src="images/velo.png" alt="">
-		</div>
-	</div>
-	<p>Durée de l'animation: <span id="duree">0</span> s</p>
-</body>
-
+  <body>
+    <input type="button" id="demarrer" value="Démarrer" />
+    <input type="hidden" id="arreter" value="Arrêter" />
+    <div id="animation">
+      <div id="velo1">
+        <img class="roue-arriere" src="images/roue.png" alt="" />
+        <img class="roue-avant" src="images/roue.png" alt="" />
+        <img class="velo" src="images/velo.png" alt="" />
+      </div>
+    </div>
+    <p>Durée de l'animation: <span id="duree">0</span> s</p>
+  </body>
 </html>
