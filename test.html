@@ -2,7 +2,7 @@
 <html lang="fr">
 
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8" />
     <title>Exercice2: animation d'un vélo</title>
     <style>
         html {
@@ -59,19 +59,16 @@
     </style>
 
     <script>
-
         window.addEventListener("load", function () {
-            demarrer = document.getElementById('demarrer');
-            seane = document.getElementById("animation");
+            demarrer = document.getElementById("demarrer");
+            scene = document.getElementById("animation");
             velo1 = document.getElementById("velo1");
             velo2 = velo1.cloneNode(true);
             velo2.setAttribute("id", "velo2");
-            seane.appendChild(velo2);
+            scene.appendChild(velo2);
             velo2 = document.getElementById("velo2");
-            widthVelo = (Math.floor(this.velo1.getBoundingClientRect().width));
+            widthVelo = Math.floor(this.velo1.getBoundingClientRect().width);
             velo2.style.left = -widthVelo + "px";
-
-
 
             var animation = {
                 velo2: document.getElementById("velo2"),
@@ -84,28 +81,25 @@
 
                 jouer: function () {
                     this.interval = setInterval(bougerVelo, 5);
-
                 },
                 velo1depart: function () {
                     this.pixelVelo1 = -widthVelo;
                     this.velo1.style.left = -widthVelo + "px";
                     this.clipPathPixel = 0;
                     this.clipPathPixel2 = widthVelo;
+                    this.retourneVelo = true;
                 },
                 velo2depart: function () {
                     this.pixelVelo2 = -widthVelo;
                     this.velo2.style.left = -widthVelo + "px";
                 },
-                positionDepart: function () {
-                    this.velo1.style.left = this.veloi + "px";
-                    this.pixelVelo1 = 0;
-                },
                 goVelo1: function () {
                     this.pixelVelo1 += 1;
                     this.velo1.style.left = this.pixelVelo1 + "px";
-                    if(this.retourneVelo) {
+                    if (this.retourneVelo) {
                         this.clipPathPixel2 -= 1;
-                        this.velo1.style.clipPath = "inset(0px 0px 0px " + this.clipPathPixel2 + "px)";  
+                        this.velo1.style.clipPath =
+                            "inset(0px 0px 0px " + this.clipPathPixel2 + "px)";
                     }
                 },
                 goVelo2: function () {
@@ -117,93 +111,87 @@
                 },
                 faireDisparaitreVelo1: function () {
                     this.clipPathPixel += 1;
-                    this.velo1.style.clipPath = "inset(0px " + this.clipPathPixel + "px 0px 0px)";
-
+                    this.velo1.style.clipPath =
+                        "inset(0px " + this.clipPathPixel + "px 0px 0px)";
                 },
-                faireAparaitreVelo1: function () {
-                    this.clipPathPixel2 -= 1;
-                    this.velo1.style.clipPath = "inset(0px " + this.clipPathPixel2 + "px 0px 0px)";
-                    console.log(this.clipPathPixel2)
-                }
-            }
 
-            if (depart) {
-                if (velo1Surseane) depart = false;
-            }
-            var depart = true;
+            };
+
             function bougerVelo() {
-                var velo1Contact = (Math.floor(velo1.getBoundingClientRect().right) >= Math.floor(seane.getBoundingClientRect().right) ? true : false);
-                var velo1Sorti = (Math.floor(velo1.getBoundingClientRect().left) >= Math.floor(seane.getBoundingClientRect().right) ? true : false);
-                var velo2Contact = (Math.floor(velo2.getBoundingClientRect().right) >= Math.floor(seane.getBoundingClientRect().right) ? true : false);
-                var velo2Sorti = (Math.floor(velo2.getBoundingClientRect().left) >= Math.floor(seane.getBoundingClientRect().right) ? true : false);
-                var velo1Surseane = (Math.floor(velo1.getBoundingClientRect().left) >= Math.floor(seane.getBoundingClientRect().left) ? true : false);
-                var velo2Surseane = (Math.floor(velo2.getBoundingClientRect().left) >= Math.floor(seane.getBoundingClientRect().left) ? true : false);
-                var velo1EnAttente = (Math.floor(velo1.getBoundingClientRect().left) <= Math.floor(seane.getBoundingClientRect().left) ? true : false);
-                var velo1EntreSeane = (Math.floor(velo1.getBoundingClientRect().left) <= Math.floor(seane.getBoundingClientRect().left) ? true : false);
-                var velo1QuitteSeane = (Math.floor(velo1.getBoundingClientRect().right) >= Math.floor(seane.getBoundingClientRect().right) ? true : false);
-                
+                var velo_1_Contact =
+                    Math.floor(velo1.getBoundingClientRect().right) >=
+                        Math.floor(scene.getBoundingClientRect().right)
+                        ? true
+                        : false;
+                var velo_2_Contact =
+                    Math.floor(velo2.getBoundingClientRect().right) >=
+                        Math.floor(scene.getBoundingClientRect().right)
+                        ? true
+                        : false;
+                var velo_1_Sorti =
+                    Math.floor(velo1.getBoundingClientRect().left) >=
+                        Math.floor(scene.getBoundingClientRect().right)
+                        ? true
+                        : false;
+                var velo_2_Sorti =
+                    Math.floor(velo2.getBoundingClientRect().left) >=
+                        Math.floor(scene.getBoundingClientRect().right)
+                        ? true
+                        : false;
+                var velo_1_Surscene =
+                    Math.floor(velo1.getBoundingClientRect().left) >=
+                        Math.floor(scene.getBoundingClientRect().left)
+                        ? true
+                        : false;
+                var velo_2_Surscene =
+                    Math.floor(velo2.getBoundingClientRect().left) >=
+                        Math.floor(scene.getBoundingClientRect().left)
+                        ? true
+                        : false;
+                var velo_1_EnAttente =
+                    Math.floor(velo1.getBoundingClientRect().left) <=
+                        Math.floor(scene.getBoundingClientRect().left)
+                        ? true
+                        : false;
+                var velo_1_Entrescene =
+                    Math.floor(velo1.getBoundingClientRect().left) <=
+                        Math.floor(scene.getBoundingClientRect().left)
+                        ? true
+                        : false;
 
-                if (velo1Contact || velo2Surseane) {
+
+                if (velo_1_Contact || velo_2_Surscene) {
                     animation.goVelo2();
                 }
-                if (velo2Contact || velo1Surseane) {
-                    
+                if (velo_2_Contact || velo_1_Surscene) {
                     animation.goVelo1();
                 }
-            
-                if (velo1Contact && velo1QuitteSeane) animation.faireDisparaitreVelo1();
-                console.log(velo1Contact,velo1QuitteSeane)
-                if (velo1EnAttente && velo1EntreSeane){
-                 
-                }   
-                    
-            
 
-                if (velo1Sorti) {
-                    animation.retourneVelo = true;
+                if (velo_1_Contact) animation.faireDisparaitreVelo1();
+
+                if (velo_1_Sorti) {
                     animation.velo1depart();
                 }
-                if (velo2Sorti) {
+                if (velo_2_Sorti) {
                     animation.velo2depart();
                 }
-
-
-
-
-
-
             }
 
-
-
-            demarrer.addEventListener('click', function () {
-
+            demarrer.addEventListener("click", function () {
                 animation.jouer();
-
-            })
-
-
-
-
-
-
-
-
-
-
+            });
         });
     </script>
-
 </head>
 
 <body>
-    <input type="button" id="demarrer" value="Démarrer">
-    <input type="hidden" id="arreter" value="Arrêter">
+    <input type="button" id="demarrer" value="Démarrer" />
+    <input type="hidden" id="arreter" value="Arrêter" />
     <div id="animation">
         <div id="velo1">
-            <img class="roue-arriere" src="images/roue.png" alt="">
-            <img class="roue-avant" src="images/roue.png" alt="">
-            <img class="velo" src="images/velo.png" alt="">
+            <img class="roue-arriere" src="images/roue.png" alt="" />
+            <img class="roue-avant" src="images/roue.png" alt="" />
+            <img class="velo" src="images/velo.png" alt="" />
         </div>
     </div>
     <p>Durée de l'animation: <span id="duree">0</span> s</p>
