@@ -1,0 +1,225 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+  <meta charset="UTF-8" />
+  <title>Exercice2: animation d'un vélo</title>
+  <style>
+    html {
+      background-color: aquamarine;
+    }
+
+    body {
+      width: 80%;
+      margin: auto;
+      background: white;
+    }
+
+    input {
+      margin: 20px;
+      padding: 5px;
+    }
+
+    #animation {
+      position: relative;
+      height: 200px;
+    }
+
+    #velo1,
+    #velo2 {
+      position: absolute;
+      width: 342px;
+      height: 200px;
+    }
+
+    img {
+      position: absolute;
+      display: block;
+    }
+
+    .velo {
+      width: 100%;
+    }
+
+    .roue-arriere {
+      bottom: 8px;
+      left: 8px;
+      width: 122px;
+    }
+
+    .roue-avant {
+      bottom: 8px;
+      left: 209px;
+      width: 122px;
+    }
+
+    p {
+      padding: 20px;
+    }
+  </style>
+
+  <script>
+    window.addEventListener("load", function () {
+      demarrer = document.getElementById("demarrer");
+      arreter = document.getElementById("arreter");
+      scene = document.getElementById("animation");
+      velo1 = document.getElementById("velo1");
+      velo2 = velo1.cloneNode(true);
+      velo2.setAttribute("id", "velo2");
+      scene.appendChild(velo2);
+      velo2 = document.getElementById("velo2");
+      widthVelo = velo1.getBoundingClientRect().width;
+      roue_1_velo_1 = velo1.children[0];
+      roue_2_velo_1 = velo1.children[1];
+      roue_1_velo_2 = velo2.children[0];
+      roue_2_velo_2 = velo2.children[1];
+      velo2.style.left = -widthVelo + "px";
+      velo2.style.clipPath = "inset(0px " + widthVelo + "px 0px 0px)";
+      duree = document.getElementById("duree");
+
+      var animation = {
+        velo2,
+        velo1,
+        sec: 0,
+        retourneVelo: false,
+        path_disparaitre_velo_1: 0,
+        path_disparaitre_velo_2: 0,
+        path_Apparaitre_velo_1: widthVelo,
+        path_Apparaitre_velo_2: widthVelo,
+        pixelVelo1: 0,
+        pixelVelo2: -widthVelo,
+
+        jouer: function () {
+          this.interval = setInterval(bougerVelo, 5);
+        },
+        velo_1_departPosition: function () {
+          this.pixelVelo1 = -widthVelo;
+          this.path_Apparaitre_velo_1 = widthVelo;
+          this.velo1.style.left = -widthVelo + "px";
+          this.path_disparaitre_velo_1 = 0;
+          this.retourneVelo = true;
+        },
+        velo_2_departPosition: function () {
+          this.pixelVelo2 = -widthVelo;
+          this.velo2.style.left = -widthVelo + "px";
+          this.path_disparaitre_velo_2 = 0;
+          this.velo2.style.clipPath =
+            "inset(0px " + widthVelo + "px 0px 0px)";
+          this.path_Apparaitre_velo_2 = widthVelo;
+        },
+        faireDisparaitreVelo1: function () {
+          this.path_disparaitre_velo_1 += 1;
+          this.velo1.style.clipPath =
+            "inset(0px " + this.path_disparaitre_velo_1 + "px 0px 0px)";
+        },
+        faireDisparaitreVelo2: function () {
+          this.path_disparaitre_velo_2 += 1;
+          this.velo2.style.clipPath =
+            "inset(0px " + this.path_disparaitre_velo_2 + "px 0px 0px)";
+        },
+        goVelo1: function () {
+          this.pixelVelo1 += 1;
+          this.velo1.style.left = this.pixelVelo1 + "px";
+          if (this.retourneVelo) {
+            this.path_Apparaitre_velo_1 -= 1;
+            this.velo1.style.clipPath =
+              "inset(0px 0px 0px " + this.path_Apparaitre_velo_1 + "px)";
+          }
+          roue_1_velo_1.style.transform =
+            "rotate(" + this.pixelVelo1 + "deg)";
+          roue_2_velo_1.style.transform =
+            "rotate(" + this.pixelVelo1 + "deg)";
+        },
+        goVelo2: function () {
+          this.pixelVelo2 += 1;
+          this.velo2.style.left = this.pixelVelo2 + "px";
+          this.path_Apparaitre_velo_2 -= 1;
+          this.velo2.style.clipPath =
+            "inset(0px 0px 0px " + this.path_Apparaitre_velo_2 + "px)";
+          roue_1_velo_2.style.transform =
+            "rotate(" + this.pixelVelo2 + "deg)";
+          roue_2_velo_2.style.transform =
+            "rotate(" + this.pixelVelo2 + "deg)";
+        },
+        RedemarrageParametre: function () {
+          this.velo2.style.left = -widthVelo + "px";
+          this.velo2.style.clipPath =
+            "inset(0px " + widthVelo + "px 0px 0px)";
+          this.velo1.style.clipPath = "inset(0px 0px 0px " + 0 + "px)";
+          this.velo1.style.left = 0 + "px";
+          this.retourneVelo = false;
+          this.path_disparaitre_velo_1 = 0;
+          this.path_disparaitre_velo_2 = 0;
+          this.path_Apparaitre_velo_1 = widthVelo;
+          this.path_Apparaitre_velo_2 = widthVelo;
+          this.pixelVelo1 = 0;
+          this.pixelVelo2 = -widthVelo;
+          this.sec = 0;
+          duree.innerHTML = this.sec;
+        },
+        getTime: function () {
+          this.sec = this.sec + 1;
+          duree.innerHTML = Math.floor(this.sec / 200);
+        },
+
+        stop: function () {
+          clearInterval(this.interval);
+        }
+      };
+
+      function bougerVelo() {
+        var velo_1_Contact = Math.floor(velo1.getBoundingClientRect().right) >= Math.floor(scene.getBoundingClientRect().right) ? true : false;
+        var velo_2_Contact = Math.floor(velo2.getBoundingClientRect().right) >= Math.floor(scene.getBoundingClientRect().right) ? true : false;
+        var velo_1_Sorti = Math.floor(velo1.getBoundingClientRect().left) >= Math.floor(scene.getBoundingClientRect().right) ? true :
+          false;
+        var velo_2_Sorti = Math.floor(velo2.getBoundingClientRect().left) >= Math.floor(scene.getBoundingClientRect().right) ? true :
+          false;
+        var velo_1_Surscene = Math.floor(velo1.getBoundingClientRect().left) >= Math.floor(scene.getBoundingClientRect().left) ? true : false;
+        var velo_2_Surscene = Math.floor(velo2.getBoundingClientRect().left) >= Math.floor(scene.getBoundingClientRect().left) ? true : false;
+        var velo_1_EnAttente = Math.floor(velo1.getBoundingClientRect().left) <= Math.floor(scene.getBoundingClientRect().left) ? true : false;
+        var velo_1_Entrescene = Math.floor(velo1.getBoundingClientRect().left) <= Math.floor(scene.getBoundingClientRect().left) ? true : false;
+
+        if (velo_1_Contact || velo_2_Surscene) animation.goVelo2();
+
+        if (velo_2_Contact || velo_1_Surscene) animation.goVelo1();
+
+
+        if (velo_1_Contact) animation.faireDisparaitreVelo1();
+        if (velo_2_Contact) animation.faireDisparaitreVelo2();
+
+        if (velo_1_Sorti) animation.velo_1_departPosition();
+
+        if (velo_2_Sorti) animation.velo_2_departPosition();
+
+        animation.getTime();
+      }
+
+      demarrer.addEventListener("click", function () {
+        animation.jouer();
+        demarrer.type = "hidden";
+        arreter.type = "button";
+      });
+      arreter.addEventListener("click", function () {
+        animation.RedemarrageParametre();
+        animation.stop();
+        demarrer.type = "button";
+        arreter.type = "hidden";
+      });
+    });
+  </script>
+</head>
+
+<body>
+  <input type="button" id="demarrer" value="Démarrer" />
+  <input type="hidden" id="arreter" value="Arrêter" />
+  <div id="animation">
+    <div id="velo1">
+      <img class="roue-arriere" src="images/roue.png" alt="" />
+      <img class="roue-avant" src="images/roue.png" alt="" />
+      <img class="velo" src="images/velo.png" alt="" />
+    </div>
+  </div>
+  <p>Durée de l'animation: <span id="duree">0</span> s</p>
+</body>
+
+</html>

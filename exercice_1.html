@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+<head>
+    <meta charset="UTF-8" />
+    <title>Exercice2: animation d'un vélo</title>
+
+
+
+
+    <style>
+        #face {
+
+
+            transform: rotateY(260deg);
+        }
+
+        #pile {
+            left: 0;
+            transform: rotateY(260deg);
+        }
+    </style>
+    <script>
+        window.addEventListener("load", function () {
+            scene = document.getElementById('animation');
+            piece = document.createElement('img');
+            piece.id = 'piece';
+            piece.src = 'images/pile.svg';
+            scene.appendChild(piece);
+            demarrer = document.getElementById("demarrer");
+            arreter = document.getElementById("arreter");
+
+            var animation = {
+                deg: 0,
+                jouer: function () {
+                    this.interval = setInterval(execution, 5);
+
+                },
+                stop: function () {
+                    clearInterval(this.interval);
+                },
+                flip: function () {
+                    if (this.deg >= 0 && this.deg <=90) {
+                        this.deg = -90;
+                        console.log(this.deg)
+
+                    }
+                    this.deg++
+
+                    if (this.deg === -90) {
+                        console.log('2')
+                        this.deg = 90;
+                    }
+
+                    if (this.i > 0) {
+                        piece.src = 'images/pile.svg';
+                    }
+                    if (this.i < 0) {
+                        piece.src = 'images/face.svg';
+                    }
+                    piece.style.transform = "rotateY(" + this.deg + "deg)";
+
+                }
+            }
+
+
+            function execution() {
+                animation.flip();
+
+            }
+
+
+
+            demarrer.addEventListener("click", function () {
+                animation.jouer();
+                demarrer.type = "hidden";
+                arreter.type = "button";
+            });
+            arreter.addEventListener("click", function () {
+                //animation.RedemarrageParametre();
+                animation.stop();
+                demarrer.type = "button";
+                arreter.type = "hidden";
+            });
+        });
+    </script>
+</head>
+
+<body>
+    <input type="button" id="demarrer" value="Démarrer" />
+    <input type="hidden" id="arreter" value="Arrêter" />
+    <div id="animation">
+
+    </div>
+    <p>Durée de l'animation: <span id="duree">0</span> s</p>
+</body>
+
+</html>
