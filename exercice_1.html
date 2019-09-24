@@ -27,12 +27,12 @@
                 },
                 flip: function () {
 
-                    if (this.deg === 90) {          // si l'image atteint 90 deg  on switch la source d'image pour la nouvelle image et elle commencera le sycle a -90deg
+                    if (this.deg === 90) {   // si l'image atteint 90 deg  on switch la source d'image pour la nouvelle image et elle commencera le sycle a -90deg
                         this.deg = -90
                         tienMoiCA = this.face_1
                         this.face_1 = this.face_2
                         this.face_2 = tienMoiCA;
-                        piece.style.transform = "rotateY(" + this.deg + "deg)";
+
                     }
                     piece.src = this.face_1;
                     this.deg++                     // à ce niveau on fais bouger l'image 
@@ -61,7 +61,7 @@
                 arreter.type = "button";
             });
             arreter.addEventListener("click", function () {
-                animation.stop(); // stop
+                animation.stop();                                 // stop
                 demarrer.type = "button";
                 arreter.type = "hidden";
             });
