@@ -110,24 +110,24 @@
       			velo.style.left = i + "px";
       			console.log(i)
 
-      			//if (signal === 'go') {
-      			// this.timerId = Window.requestAnimationFrame(function () {
-      			// 		var seane = velo.parentElement;
-      			// 		var coteDroitVelo = Math.floor(velo.getBoundingClientRect().right);
-      			// 		var coteGaucheVelo = Math.floor(velo.getBoundingClientRect().left);
-      			// 		var coteDroitSeane = Math.floor(seane.getBoundingClientRect().right);
-      			// 		var coteGaucheSeane = Math.floor(seane.getBoundingClientRect().left);
-      			// 		if (coteDroitVelo === coteDroitSeane) {
-      			// 			veloFinDeCourse('contact')
-      			// 		} else if (coteGaucheVelo === coteDroitSeane) {
-      			// 			veloFinDeCourse('out')
-      			// 		}
+      			if (signal === 'go') {
+      			this.timerId = Window.requestAnimationFrame(function () {
+      					var seane = velo.parentElement;
+      					var coteDroitVelo = Math.floor(velo.getBoundingClientRect().right);
+      					var coteGaucheVelo = Math.floor(velo.getBoundingClientRect().left);
+      					var coteDroitSeane = Math.floor(seane.getBoundingClientRect().right);
+      					var coteGaucheSeane = Math.floor(seane.getBoundingClientRect().left);
+      					if (coteDroitVelo === coteDroitSeane) {
+      						veloFinDeCourse('contact')
+      					} else if (coteGaucheVelo === coteDroitSeane) {
+      						veloFinDeCourse('out')
+      					}
 
-      			// 	});
-      			//}
-      			// if (signal === 'stop') {
-      			// 	window.clearInterval(this.timerId);
-      			// }
+      				});
+      			}
+      			if (signal === 'stop') {
+      				window.clearInterval(this.timerId);
+      			}
 
 
       		}
@@ -141,19 +141,19 @@
       	velo22 = new velo(velo2);
       	velo22.veloDepartPostion();
 
-      	// velo1.bougerVelo('go', function (x) {
-      	// 	console.log(x);
-      	//});
+      	velo1.bougerVelo('go', function (x) {
+      		console.log(x);
+      	});
       	demarrer.addEventListener('click', function () {
       		hello = setInterval(velo12.bougerVelo,30)
 
-      		//velo1.bougerVelo('go', function (x) {
+      		velo1.bougerVelo('go', function (x) {
 
-      		// if (x === 'contact') {
-      		// 	velo2.bougerVelo('go', function (y) {
+      		if (x === 'contact') {
+      			velo2.bougerVelo('go', function (y) {
 
-      		// 	})
-      		// }
+      			})
+      		}
       	});
       })
 
@@ -169,15 +169,15 @@
 
 
 
-      	//velo12.bougerVelo('stop')
-      	//console.log(velo12.VeloQuitteSeane())
-      	//velo12.bougerVelo();
-      	// velo12.veloDepartPostion();
-      	// console.log(v = Math.floor(velo1.getBoundingClientRect().width));
-      	// console.log(s = Math.floor(seane.getBoundingClientRect().left));
-      	// v = Math.floor(velo1.getBoundingClientRect().width)
-      	// s = Math.floor(seane.getBoundingClientRect().left)
-      	// console.log(s - v);
+      	velo12.bougerVelo('stop')
+      	console.log(velo12.VeloQuitteSeane())
+      	velo12.bougerVelo();
+      	velo12.veloDepartPostion();
+      	console.log(v = Math.floor(velo1.getBoundingClientRect().width));
+      	console.log(s = Math.floor(seane.getBoundingClientRect().left));
+      	v = Math.floor(velo1.getBoundingClientRect().width)
+      	s = Math.floor(seane.getBoundingClientRect().left)
+      	console.log(s - v);
     </script>
   </head>
 
